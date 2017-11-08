@@ -1,0 +1,67 @@
+{% extends "base/base.html" %} {% load staticfiles %} {% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                Tambahkan Akun Media Klub
+            </div>
+            <div class="box-body">
+                <form action="{% url 'setting:edit' object.pk %}" method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="name">Keterangan / Label</label>
+                        <input type="text" required name="name" value="{{object.name}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="url">Alamat Situs</label>
+                        <textarea rows="2" cols="" class="form-control" name="url">{{object.url}}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <a href="/setting/" type="reset" class="btn btn-danger">Batal</a>
+                            <button type="submit" class="btn btn-success" style="margin-left: 8px;">Update</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                List Akun Media Klub
+            </div>
+            <div class="box-body">
+                <table class="table table-striped table-hovered">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama</th>
+                            <th>Alamat Situs</th>
+                            <th style="text-align: center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for social in social_list %}
+                        <tr>
+                            <td style="width: 5%">{{forloop.counter}}</td>
+                            <td style="width: 30%">{{social.name}}</td>
+                            <td><a href="{{social.url}}">{{social.url}}</a></td>
+                            <td style="width: 10%">
+                                <div class="btn-group">
+                                    <a href="{% url 'setting:edit' social.pk %}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="{% url 'setting:delete' social.pk %}" class="btn btn-danger" onclick="return confirm('Ingin menghapus data ini?')"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

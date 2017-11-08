@@ -1,0 +1,6 @@
+django==1.9
+pillow
+mysqlclient
+django-robots
+Pillow
+sorl-thumbnail

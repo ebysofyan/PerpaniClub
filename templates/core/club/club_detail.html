@@ -1,0 +1,142 @@
+{% extends "base/base.html" %} {% load staticfiles %} {% block content %}
+<div class="row">
+
+
+    <div class="col-md-7 col-sm-7">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h6 style="text-align: center">Detail Klub <b>{{request.user.member.club.name}}</b></h6>
+            </div>
+            <div class="box-body">
+                <div class="col-md-3 col-sm-3">
+                    <img src="{% if request.user.member.club.logo %}{{request.user.member.club.logo.url}}{% endif %}" alt="" style="width: 100%; height: auto; border: 1px #d5d8dc solid">
+                    <p style="text-align: center; font-size: 18px; padding-top: 8px;"><b>{{request.user.member.club.name}}</b></p>
+                    <p style="text-align: center; font-size: 13px;">{{request.user.member.club.slogan}}</p>
+                    <a href="/club/edit" class="btn btn-success btn-outline btn-block" style="margin-bottom: 8px">Ubah Info <i class="fa fa-pencil"></i></a>
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    <table class="table table-responsive table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <td style="width: 40%">Nama Klub</td>
+                                <td>:</td>
+                                <td>{{request.user.member.club.name}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">No. Registrasi PERPANI</td>
+                                <td>:</td>
+                                <td>{{request.user.member.club.register_number}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">Tanggal Berdiri</td>
+                                <td>:</td>
+                                <td>{{request.user.member.club.since}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">Alamat</td>
+                                <td>:</td>
+                                <td>{{request.user.member.club.secretariat}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">Kab./Kota Asal</td>
+                                <td>:</td>
+                                <td>{{request.user.member.club.city.name}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">Ketua</td>
+                                <td>:</td>
+                                <td>{{request.user.member.club.leader}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">Jumlah Anggota</td>
+                                <td>:</td>
+                                <td>{{member.total}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%">Jumlah Coach</td>
+                                <td>:</td>
+                                <td>{{member.coach_total}}</td>
+                            </tr>
+                            {% for social in request.user.member.club.socials.all %}
+                            <tr>
+                                <td style="width: 40%">{{social.name}}</td>
+                                <td>:</td>
+                                <td><a href="{{social.url}}" target="_blank">{{social.url}}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 col-sm-5">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h6 style="text-align: center">Anggota Berdasarkan Jenis Kelamin</h6>
+            </div>
+            <div class="box-body">
+                <canvas id="genderChart" width="400" height="160"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 col-sm-5">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h6 style="text-align: center">Anggota Berdasarkan Kategori Usia</h6>
+            </div>
+            <div class="box-body">
+                <canvas id="ageChart" width="400" height="160"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block js %}
+<script>
+    var bgColor = [
+        'rgba(255, 206, 86, 0.7)',
+        'rgba(75, 192, 192, 0.7)',
+        'rgba(153, 102, 255, 0.7)',
+        'rgba(153, 45, 89, 0.7)',
+        'rgba(19, 102, 13, 0.7)',
+        'rgba(5, 237, 255, 0.7)',
+        'rgba(8, 155, 255, 0.7)',
+        'rgba(114, 114, 255, 0.7)',
+        'rgba(155, 55, 1, 0.7)',
+        'rgba(237, 34, 255, 0.7)',
+    ]
+
+    var genderChartContainer = document.getElementById("genderChart").getContext('2d');
+    var genderChart = new Chart(genderChartContainer, {
+        type: 'pie',
+        data: {
+            labels: ["Pria", "Wanita"],
+            datasets: [{
+                label: 'Anggota Berdasarkan Jenis Kelamin',
+                data: [{{member.male_total | safe}}, {{member.female_total | safe}}],
+                borderWidth: 1,
+                backgroundColor: bgColor
+            }]
+        },
+        options: '',
+    });
+
+    var ageChartContainer = document.getElementById("ageChart").getContext('2d');
+    var chart = new Chart(ageChartContainer, {
+        type: 'pie',
+        data: {
+            labels: ["Anak - Anak (<12)", "Remaja (12-17)", "Dewasa (>=18)"],
+            datasets: [{
+                label: 'Anggota Berdasarkan Kategori Usia',
+                data: [{{member.anak | safe}}, {{member.remaja | safe}}, {{member.dewasa | safe}}],
+                borderWidth: 1,
+                backgroundColor: bgColor
+            }]
+        },
+        options: '',
+    });
+</script>
+{% endblock js %} {% endblock content %}

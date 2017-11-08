@@ -1,0 +1,56 @@
+{% load staticfiles %}
+
+<style>
+    .bordered-img {
+        position: relative;
+        border: 1px #d5d5d5 solid;
+        width: 100%;
+        height: 50%;
+    }
+
+    img:hover{
+        cursor: pointer;
+    }
+
+    .center{
+        display: table; 
+        margin: 0 auto;
+    }
+
+    p{
+        text-align: center;
+    }
+</style>
+<div class="row">
+    {% for file in request.user.member.club.clubfiles.all %} 
+    {% if not file.mimetype == 'image' %}
+      {% if file.file_ext == 'msword' %} 
+        <div class="col-md-2 center" style="margin-bottom: 16px;">
+            <img id="image" class="bordered-img" src="{% static 'images/word.png' %}" onclick="imgClick('{{file.file.url}}')">
+            <p>{{file.filename}}</p>
+        </div>
+    {% elif file.file_ext == 'msexcel' %}
+        <div class="col-md-2 center" style="margin-bottom: 16px;">
+            <img id="image" class="bordered-img" src="{% static 'images/excel.png' %}" onclick="imgClick('{{file.file.url}}')">
+            <p>{{file.filename}}</p>
+        </div>
+    {% elif file.file_ext == 'pdf' %}
+        <div class="col-md-2 center" style="margin-bottom: 16px;">
+            <img id="image" class="bordered-img" src="{% static 'images/pdf.png' %}" onclick="imgClick('{{file.file.url}}')">
+            <p>{{file.filename}}</p>
+        </div>
+    {% else %}
+        <div class="col-md-2 center" style="margin-bottom: 16px;">
+            <img id="image" class="bordered-img" src="{% static 'images/document.png' %}" onclick="imgClick('{{file.file.url}}')">
+            <p>{{file.filename}}</p>
+        </div>
+    {% endif %} 
+    {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+    function imgClick(url){
+        window.open(url, '_blank')
+    }
+</script>

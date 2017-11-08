@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<header class="main-header">
+    <nav class="navbar navbar-static-top">
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand"><b>{{request.user.member.club.name}}</b></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% if menu == 'club' %}active-nav active{%endif%}"><a href="/club/">Klub &nbsp; <i class="fa fa-users"></i></a></li>
+                <li class="{% if menu == 'member' %}active-nav active{%endif%}"><a href="/member/">Anggota &nbsp; <i class="fa fa-user"></i></a></li>
+                <li class="{% if menu == 'docs' %}active-nav active{%endif%}"><a href="/documents/">Berkas &nbsp; <i class="fa fa-files-o"></i></a></li>
+                <li class="{% if menu == 'setting' %}active-nav active{%endif%}"><a href="/setting/">Pengaturan &nbsp; <i class="fa fa-cog"></i></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        <img src="{{request.user.member.picture.url}}" class="user-image" alt="User Image">
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">{{request.user.member.name}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- The user image in the menu -->
+                        <li class="user-header">
+                            <img src="{{request.user.member.picture.url}}" class="img-circle" alt="User Image">
+
+                            <p>
+                                {{request.user.member.name}} - {{request.user.member.position}}
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="{% url 'member:detail' request.user.member.pk %}" class="btn btn-default btn-flat">Profile</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{% url 'logout' %}" class="btn btn-default btn-flat">Sign out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-custom-menu -->
+    </nav>
+</header>
+<!-- <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Title</span>
+     <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="">Tentang Aplikasi</a>
+    </nav> 
+</div> -->

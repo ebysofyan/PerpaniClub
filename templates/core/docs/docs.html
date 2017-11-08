@@ -1,0 +1,72 @@
+{% extends "base/base.html" %} {% block content %}
+
+<div class="box box-success">
+    <div class="box-header with-border">
+        Simpan Dokumen klub anda dengan rapi disini ^_^
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <form id="my-dropzone" action="{% url 'docs:view' %}" method="post" class="dropzone" drop-zone enctype="multipart/form-data">
+                {% csrf_token %}
+            </form>
+        </div>
+        <div class="form-group" style="display: table; margin: 0 auto;">
+            <button id="submit-all" class="btn btn-success btn-outline">Upload Semua File <i class="fa fa-upload"></i></button>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">File Gambar</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">File Dokumen</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home" style="padding: 16px;">{% include "core/docs/docsview/docs_image.html" %}</div>
+                    <div role="tabpanel" class="tab-pane" id="profile" style="padding: 16px;">{% include "core/docs/docsview/docs_filedoc.html" %}</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %} {% block js %}
+<script type="text/javascript">
+    Dropzone.options.myDropzone = {
+
+        // Prevents Dropzone from uploading dropped files immediately
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        parallelUploads: 13,
+        acceptedFiles: ".pdf, .doc, .docx, .jpg, .jpeg, .png, .xls, .xlsx",
+
+        init: function () {
+            var submitButton = document.querySelector("#submit-all")
+            myDropzone = this;
+
+            submitButton.addEventListener("click", function () {
+                myDropzone.processQueue();
+                // Tell Dropzone to process all queued files.
+            });
+
+            // You might want to show the submit button only when
+            // files are dropped here:
+            this.on("addedfile", function () {
+                // Show submit button here and/or inform user to click it.
+            });
+
+            this.on('success', function () {
+                if (this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
+                    toastr.success('Semua File Berhasil di Upload')
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000)
+                }
+            });
+        },
+    };
+</script>
+{% endblock js %}

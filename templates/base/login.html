@@ -1,0 +1,225 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% include "base/static.html" %}
+</head>
+{% comment %} {% autoescape off %} {% endcomment %}
+
+<body class="hold-transition skin-green layout-top-nav">
+
+    <header class="main-header">
+        <nav class="navbar navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand"></a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class=""><a href="#">Website Perpani NTB &nbsp; <i class="fa fa-globe"></i></a></li>
+                        <li class=""><a href="#" onclick="showModal()">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container">
+                <h2>PERPANI NTB <small>Club</small></h2>
+                <h6 style="text-align: justify"></h6>
+            </div>
+        </section>
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-blue"><i class="fa fa-users"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Klub</span>
+                                <span class="info-box-number">{{club.total}}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Pemanah</span>
+                                <span class="info-box-number">{{member.total}}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+
+                    <!-- fix for small devices only -->
+                    <div class="clearfix visible-sm-block"></div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green"><i class="fa fa-user"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Pelatih</span>
+                                <span class="info-box-number">{{member.coach_total}}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">New Members</span>
+                                <span class="info-box-number">2,000</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h5>Statistik Klub Berdasarkan Kab./Kota</h5>
+                            </div>
+                            <div class="box-body">
+                                <canvas id="pieChart" width="400" height="237"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h5>Statistik Berdasarkan Anggota Terdaftar per Klub</h5>
+                            </div>
+                            <div class="box-body">
+                                <canvas id="dounatChart" width="400" height="237"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <div id="modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" method="POST" action=".">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title">Login Untuk Mengelola Clubmu</h5>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="" class="control-label">Username</label>
+                        <input type="text" class="form-control" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">Password</label>
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-outline">Login <i class="fa fa-sign-in"></i></button>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    {% if messages %} {% for message in messages %} {% if message.tags == 'warning' %}
+    <script>
+        toastr.error('{{message}}')
+    </script>
+    {% endif %} {% endfor %} {% endif %}
+
+    <script>
+        function showModal() {
+            $('#modal').modal()
+        }
+
+        var bgColor = [
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(153, 45, 89, 0.7)',
+            'rgba(19, 102, 13, 0.7)',
+            'rgba(5, 237, 255, 0.7)',
+            'rgba(8, 155, 255, 0.7)',
+            'rgba(114, 114, 255, 0.7)',
+            'rgba(155, 55, 1, 0.7)',
+            'rgba(237, 34, 255, 0.7)',
+        ]
+
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+        var pieContainer = document.getElementById("pieChart").getContext('2d');
+        var chart = new Chart(pieContainer, {
+            type: 'pie',
+            data: {
+                labels: {{citys.labels | safe}},
+                datasets: [{
+                    label: '# of Votes',
+                    data: {{ citys.values | safe}},
+                    backgroundColor: bgColor,
+                    borderWidth: 0
+                }]
+            },
+            options: ''
+        });
+
+        var dounatContainer = document.getElementById("dounatChart").getContext('2d');
+        var dounatChart = new Chart(dounatContainer, {
+            type: 'polarArea',
+            data: {
+                labels: {{club.labels | safe }},
+                datasets: [{
+                    label: '# of Votes',
+                    data: {{ club.member_count | safe}},
+                    backgroundColor: bgColor,
+                    borderWidth: 0
+                }]
+            },
+            options: options
+        });
+    </script>
+</body>
+{% comment %} {% endautoescape %} {% endcomment %}
+
+{% include "base/footer.html" %}
+
+</html>

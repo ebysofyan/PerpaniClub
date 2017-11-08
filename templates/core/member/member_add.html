@@ -1,0 +1,113 @@
+{% extends "base/base.html" %} {% load staticfiles %} {% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                Tambah Member
+            </div>
+            <div class="box-body">
+                <div class="col-md-3 col-sm-3">
+                    <img src="{% static 'images/avatar.png' %}" id="picture" alt="" style="width: 100%; height: auto;">
+                    <button class="btn btn-success btn-outline btn-block" style="margin-top: 8px; margin-bottom: 8px;" onclick="document.getElementById('fileInput').click();">Upload Gambar <i class="fa fa-upload"></i></button>
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    <form action="{% url 'member:add' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="username">No. Registrasi Klub</label>
+                            <input type="text" required name="username" value="" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" required name="password" value="" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Nama</label>
+                            <input type="text" class="form-control" name="name" value="" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Alamat</label>
+                            <textarea name="adress" rows="3" class="form-control" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Jenis Kelamin</label>
+                        </div>
+                        <div class="form-group">
+                            <input required type="radio" name="gender" value="pria"> Pria &nbsp; &nbsp; &nbsp;
+                            <input required type="radio" name="gender" value="wanita"> Wanita
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Tanggal Lahir</label>
+                            <input required type="text" id="datepicker" class="form-control" name="born_date" value="" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">No. HP</label>
+                            <input required type="text" class="form-control" name="phone" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Panjang Tarikan (Inch)</label>
+                            <input required type="number" step="any" class="form-control" name="draw_length" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="control-label">Posisi Dalam Klub</label>
+                            <select class="form-control" name="position">
+                    <option value="Member">Anggota</option>
+                    <option value="Coach">Coach</option>
+                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input id="fileInput" name='picture' type="file" style="display:none;" accept="image/*" />
+                        </div>
+
+                        <div class="form-group">
+                            <span style="font-size: 10px; color: red">*User dapat menambahkan, mengubah, dan menghapus Anggota dan berkas klub, dan pengaturan grup</span>
+                            <label for="" class="control-label">Jadikan User Sebagai Pengelola</label> &nbsp; <input type="checkbox"
+                                name="gender" value="wanita">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="btn-group pull-right">
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                                <button type="submit" class="btn btn-success" style="margin-left: 8px;">Simpan</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} {% block js %}
+<script>
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#picture').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#fileInput").change(function () {
+        readURL(this);
+    });
+
+    $('#datepicker').datepicker({
+        autoclose: true
+    })
+</script>
+{% endblock js %}

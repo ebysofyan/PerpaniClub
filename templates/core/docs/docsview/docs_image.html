@@ -1,0 +1,44 @@
+{% load thumbnail %}
+
+<style>
+    img:hover {
+        cursor: pointer;
+    }
+
+    .center {
+        display: table;
+        margin: 0 auto;
+    }
+
+    .thumbnail img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 145px;
+        width: auto;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .thumbnail {
+        position: relative;
+        height: 200px;
+        overflow: hidden
+    }
+</style>
+<div class="row">
+    {% for file in request.user.member.club.clubfiles.all %} {% if file.mimetype == 'image' %}
+    <div class="col-md-3 col-xs-12 center thumbnail" style="margin-bottom: 16px; position: relative;">
+        <img src="{{ file.file.url }}" onclick="imgClick('{{file.file.url}}')">
+        <a href="{% url 'docs:delete' pk=file.pk %}" class="center" onclick="return confirm('Anda yakin ingin menghapus file ini?')">Hapus [x]</a>
+        <p style="position: absolute; bottom: 3px; text-align: center" class="center">{{file.filename}}</p>
+    </div>
+    {% endif %} {% endfor %}
+</div>
+
+<script>
+    function imgClick(url) {
+        window.open(url, '_blank')
+    }
+</script>

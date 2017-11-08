@@ -1,0 +1,70 @@
+{% extends "base/base.html" %} {% load staticfiles %} {% block content %} {% if member %}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                Detai Member : <b>{{member.name}}</b>
+            </div>
+            <div class="box-body">
+                <div class="col-md-3 col-sm-3">
+                    <img src="{{member.picture.url}}" alt="" style="width: 100%; height: auto; border: 1px #d5d8dc solid">
+                    <p style="text-align: center; font-size: 18px; padding-top: 8px;"><b>{{member.name}}</b></p>
+                    <a href="{% url 'member:edit' member.pk %}" class="btn btn-success btn-outline btn-block" style="margin-bottom: 8px">Ubah Info <i class="fa fa-pencil"></i></a>
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    <table class="table table-responsive table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <td style="width: 30%">Nama</td>
+                                <td>:</td>
+                                <td>{{member.name}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">No. Registrasi Klub</td>
+                                <td>:</td>
+                                <td>{{member.user.username}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">Alamat</td>
+                                <td>:</td>
+                                <td>{{member.adress}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">Jenis Kelamin</td>
+                                <td>:</td>
+                                <td>{{member.gender}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">Tanggal Lahir</td>
+                                <td>:</td>
+                                <td>{{member.born_date}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">No. HP</td>
+                                <td>:</td>
+                                <td>{{member.phone}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">Draw Length</td>
+                                <td>:</td>
+                                <td>{{member.draw_length}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">Posisi</td>
+                                <td>:</td>
+                                <td>{{member.position}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="/member/add/" class="pull-right" style="margin-left: 16px;">Tambah Anggota &raquo;</a> 
+                    <a href="/member/" class="pull-right">&laquo; Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%else%}
+<h6 style="text-align: center">Anggota Tidak Ditemukan</h6>
+{% endif %} {% endblock content %}

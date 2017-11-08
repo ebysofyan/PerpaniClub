@@ -1,0 +1,26 @@
+<style>
+    .card-container {
+        display: table;
+        margin: 0 auto;
+    }
+
+    .card {
+        position: relative;
+        -webkit-box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.13);
+        -moz-box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.13);
+        box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.13);
+        padding: 16px;
+    }
+
+    .card > a{
+        display: table;
+        margin: 0 auto;
+    }
+</style>
+
+<div class="card-container">
+    <div class="card">
+        <h3>Maaf Anda tidak diizinkan untuk mengakses halaman ini</h3>
+        <a href="{% url 'logout' %}">Menuju Halaman Login</a>
+    </div>
+</div>

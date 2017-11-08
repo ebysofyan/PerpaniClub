@@ -1,0 +1,103 @@
+body {
+    background: #EFEFEF
+}
+
+.custom-navbar {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.custom-navbar li {
+    display: inline;
+}
+
+.custom-navbar li {
+    display: inline;
+}
+
+.custom-navbar a {
+    display: inline-block;
+}
+
+.card {
+    background: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.navbar-nav {
+    width: 100%;
+    text-align: center;
+}
+
+.navbar-nav>li {
+    float: none;
+    display: inline-block;
+}
+
+.take-all-space-you-can {
+    width: 21%;
+}
+
+.active-nav {
+    border-bottom: 2px white solid;
+}
+
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
+}
+
+
+/* .navbar-nav li > a{
+    color: white
+}
+
+.navbar-nav li > a:hover{
+    background: #5cb85c;
+    color: #efefef;
+    border-bottom: 3px #E91E63 solid;
+} */
